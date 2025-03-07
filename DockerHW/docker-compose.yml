@@ -2,3 +2,9 @@ version: '3'
 
 services:
   web:
+    build: ./web
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./web:/app  # Mount the web folder to /app in the container
+    command: python main.py
