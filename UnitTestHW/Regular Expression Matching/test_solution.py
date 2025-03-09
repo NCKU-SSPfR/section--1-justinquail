@@ -1,9 +1,10 @@
-import ...
-from ...
+import pytest
+from solution import Solution
 
 @pytest.fixture
-...
-    
+def solution():
+    return Solution()
+
 testcases = [
     # s, p, expected_res
     ["", "", True],
@@ -15,8 +16,8 @@ testcases = [
     ["aaa", "ab*a*c*a", True]
 ]
 
-@pytest.mark.parametrize([?], testcases)
-...
+@pytest.mark.parametrize("s, p, expected", testcases)
+def test_isMatch(solution, s, p, expected):
     assert solution.isMatch(s, p) == expected
 
 """
