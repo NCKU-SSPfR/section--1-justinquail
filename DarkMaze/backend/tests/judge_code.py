@@ -27,7 +27,7 @@ def _parse_map(map_string, map_size, reversal_nodes=[]):
     grid = np.array(flat_map).reshape((height, width))
     
     for x, y in reversal_nodes:
-        if 0 <= x < height and 0 <= y < width:
+        if 0 <= x < width and 0 <= y < height:
             grid[y, x] = 1 - grid[y, x]
     
     return grid
@@ -55,30 +55,23 @@ def _load_maze_from_json(maze_level_name):
 
 def hit_obstacle(position, maze_level_name):
     x, y = position
-    maze_data = _load_maze_from_json(maze_level_name)  # You can replace this with the actual level you're working with
+    maze_data = _load_maze_from_json(maze_level_name)
     grid = maze_data["map"]
-    #print(grid, position)
     
     # Check if the position is within the bounds of the grid
-    if 0 <= x < grid.shape[0] and 0 <= y < grid.shape[1]:
+    if 0 <= x < grid.shape[1] and 0 <= y < grid.shape[0]:
         # Return True if there's an obstacle (1) at the position, False if free space (0)
         return grid[y, x] == 1
     else:
         # Position is out of bounds
         return True
-    
+
 def game_over(health):
-    if health == 0 or health == 666:
-        return True
-    
-    return False
+    return health == 0 or health == 666
 
 def arrive_at_destination(maze_level_name, current_position):
     with open("./src/game/maze_level/" + maze_level_name + ".json", 'r', encoding='utf-8') as f:
         data = json.load(f)
     
     end_position = tuple(data.get("end_position", [0, 0]))
-    if tuple(current_position) == end_position:
-        return True
-    
-    return False
+    return tuple(current_position) == end_position
