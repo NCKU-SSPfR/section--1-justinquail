@@ -26,4 +26,4 @@ class TestSolution:
     
     def test_invalid_input(self, solution):
         with pytest.raises(TypeError):
-            solution.singleFizzBuzz("a string") 
+            solution.singleFizzBuzz("a string")
