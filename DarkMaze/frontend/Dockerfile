@@ -1,6 +1,8 @@
 FROM python:3.11
 
-RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+RUN groupadd -r appgroup && \
+    useradd -r -m -g appgroup -d /app appuser && \
+    chmod 775 /app
 
 WORKDIR /app
 
