@@ -2,6 +2,7 @@ import sqlite3
 import json
 
 conn = sqlite3.connect("game.db")
+
 cursor = conn.cursor()
 
 def create_user(username):
