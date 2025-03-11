@@ -1,20 +1,15 @@
-# Use the official Python image from the Docker Hub
 FROM python:3.11
 
-# Set the working directory in the container
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+
 WORKDIR /app
 
-# Copy the requirements file into the container
-COPY requirements.txt .
+COPY --chown=appuser:appgroup ./requirements.txt /app/requirements.txt
 
-# Install the dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copy the current directory contents into the container at /app
-COPY . .
+COPY --chown=appuser:appgroup ./src /app/src
 
-# Expose port 8088 to the outside world
-EXPOSE 8088
+USER appuser
 
-# Command to run the application
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8088", "--reload"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
